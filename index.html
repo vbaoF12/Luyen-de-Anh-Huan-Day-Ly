@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Website luyện đề Vật lí THPT theo cấu trúc mới, chấm điểm và thống kê kết quả học sinh." />
+  <title>ANH HUÂN DẠY LÝ | Luyện đề THPT</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" data-screen="home" aria-label="Về trang chủ">
+      <span class="brand-mark">H</span>
+      <span>
+        <strong>ANH HUÂN DẠY LÝ</strong>
+        <small>Luyện thi Vật lí THPT</small>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Điều hướng chính">
+      <button id="student-home-button" class="nav-link" data-screen="home" type="button" hidden>Kho đề</button>
+      <span id="student-nav-account" class="student-nav-account" hidden>
+        <span id="student-nav-avatar" class="student-nav-avatar">HS</span>
+        <span>
+          <strong id="student-nav-name">Học sinh</strong>
+          <small id="student-nav-class">Lớp --</small>
+        </span>
+      </span>
+      <button id="student-logout-button" class="nav-link student-logout-nav" type="button" hidden>Đăng xuất</button>
+      <button id="teacher-dashboard-button" class="nav-link" type="button">Giáo viên</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="student-auth-screen" class="screen student-auth-screen active">
+      <div class="student-auth-shell">
+        <section class="student-auth-intro">
+          <a class="student-auth-brand" href="#" aria-label="ANH HUÂN DẠY LÝ">
+            <span class="brand-mark">H</span>
+            <span>
+              <strong>ANH HUÂN DẠY LÝ</strong>
+              <small>Hệ thống luyện đề Vật lí THPT</small>
+            </span>
+          </a>
+
+          <span class="student-auth-eyebrow">LUYỆN ĐỀ CÁ NHÂN HÓA</span>
+          <h1>Đăng nhập trước khi<br /><span>chọn đề để luyện.</span></h1>
+          <p>
+            Tài khoản giúp hệ thống nhận đúng học sinh, lưu điểm theo từng đề
+            và giữ lại lịch sử luyện tập trên nhiều thiết bị.
+          </p>
+
+          <div class="student-auth-benefits">
+            <article><strong>01</strong><span>Chọn đề trong kho đề giáo viên đã xuất bản</span></article>
+            <article><strong>02</strong><span>Điểm được lưu đúng tài khoản và lớp học</span></article>
+            <article><strong>03</strong><span>Đăng nhập lại để tiếp tục theo dõi tiến bộ</span></article>
+          </div>
+        </section>
+
+        <section class="student-auth-card" aria-labelledby="student-auth-title">
+          <div class="student-auth-card-heading">
+            <span class="student-auth-icon" aria-hidden="true">HS</span>
+            <div>
+              <span class="eyebrow dark">KHU VỰC HỌC SINH</span>
+              <h2 id="student-auth-title">Đăng nhập tài khoản</h2>
+            </div>
+          </div>
+
+          <div class="student-auth-tabs" role="tablist" aria-label="Đăng nhập hoặc tạo tài khoản">
+            <button class="student-auth-tab active" type="button" role="tab" aria-selected="true" data-student-auth-tab="login">Đăng nhập</button>
+            <button class="student-auth-tab" type="button" role="tab" aria-selected="false" data-student-auth-tab="register">Tạo tài khoản</button>
+          </div>
+
+          <form id="student-login-form" class="student-auth-form active" data-student-auth-panel="login">
+            <label class="student-auth-field">
+              <span>Email học sinh</span>
+              <input id="student-login-email" type="email" inputmode="email" autocomplete="email" placeholder="hocsinh@gmail.com" required />
+            </label>
+
+            <label class="student-auth-field">
+              <span>Mật khẩu</span>
+              <span class="student-password-wrap">
+                <input id="student-login-password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" minlength="6" required />
+                <button class="student-password-toggle" type="button" data-toggle-password="student-login-password" aria-label="Hiện mật khẩu">Hiện</button>
+              </span>
+            </label>
+
+            <p id="student-login-error" class="student-auth-message error" role="alert" aria-live="polite"></p>
+
+            <button id="student-login-submit" class="student-auth-submit" type="submit">
+              <span>Đăng nhập và chọn đề</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <form id="student-register-form" class="student-auth-form" data-student-auth-panel="register" hidden>
+            <div class="student-register-grid">
+              <label class="student-auth-field student-register-wide">
+                <span>Họ và tên học sinh</span>
+                <input id="student-register-name" type="text" autocomplete="name" placeholder="Ví dụ: Nguyễn Minh Anh" maxlength="80" required />
+              </label>
+
+              <label class="student-auth-field">
+                <span>Lớp</span>
+                <input id="student-register-class" type="text" placeholder="Ví dụ: 12A1" maxlength="20" required />
+              </label>
+
+              <label class="student-auth-field">
+                <span>Email</span>
+                <input id="student-register-email" type="email" inputmode="email" autocomplete="email" placeholder="hocsinh@gmail.com" required />
+              </label>
+
+              <label class="student-auth-field">
+                <span>Mật khẩu</span>
+                <span class="student-password-wrap">
+                  <input id="student-register-password" type="password" autocomplete="new-password" placeholder="Tối thiểu 6 ký tự" minlength="6" required />
+                  <button class="student-password-toggle" type="button" data-toggle-password="student-register-password" aria-label="Hiện mật khẩu">Hiện</button>
+                </span>
+              </label>
+
+              <label class="student-auth-field">
+                <span>Nhập lại mật khẩu</span>
+                <span class="student-password-wrap">
+                  <input id="student-register-confirm-password" type="password" autocomplete="new-password" placeholder="Nhập lại mật khẩu" minlength="6" required />
+                  <button class="student-password-toggle" type="button" data-toggle-password="student-register-confirm-password" aria-label="Hiện mật khẩu">Hiện</button>
+                </span>
+              </label>
+            </div>
+
+            <p id="student-register-message" class="student-auth-message" role="status" aria-live="polite"></p>
+
+            <button id="student-register-submit" class="student-auth-submit" type="submit">
+              <span>Tạo tài khoản học sinh</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <div class="student-auth-divider"><span>hoặc</span></div>
+          <button id="student-auth-teacher-button" class="student-teacher-access" type="button">Tôi là giáo viên</button>
+        </section>
+      </div>
+    </section>
+
+    <section id="home-screen" class="screen">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="eyebrow">HỆ THỐNG LUYỆN ĐỀ VẬT LÍ THPT</span>
+          <h1>Làm đề đúng cấu trúc.<br /><span>Biết rõ điểm yếu.</span></h1>
+          <p>
+            Chọn đề Vật lí phù hợp, làm bài theo cấu trúc mới, nhận điểm ngay
+            và theo dõi kết quả học tập trên hệ thống.
+          </p>
+
+          <div class="hero-pills">
+            <span>18 câu chọn đáp án</span>
+            <span>4 câu Đúng/Sai</span>
+            <span>6 câu trả lời ngắn</span>
+          </div>
+        </div>
+
+        <form id="start-form" class="start-card">
+          <div class="card-heading">
+            <span class="card-icon">✦</span>
+            <div>
+              <p id="selected-exam-code">CHỌN MỘT ĐỀ ĐỂ BẮT ĐẦU</p>
+              <h2 id="selected-exam-title">Kho đề luyện Vật lí THPT</h2>
+            </div>
+          </div>
+
+          <div class="student-current-card">
+            <span id="student-current-avatar" class="student-current-avatar">HS</span>
+            <span class="student-current-copy">
+              <small>Đang luyện đề với tài khoản</small>
+              <strong id="student-current-name">Học sinh</strong>
+              <span id="student-current-meta">Lớp --</span>
+            </span>
+          </div>
+
+          <div class="exam-meta">
+            <div><strong id="selected-exam-duration">--</strong><span>phút</span></div>
+            <div><strong id="selected-exam-count">--</strong><span>câu</span></div>
+            <div><strong>10</strong><span>điểm</span></div>
+          </div>
+
+          <button id="start-exam-submit" class="primary-button" type="submit" disabled>Bắt đầu làm bài</button>
+        </form>
+      </div>
+
+      <section class="exam-library-section" aria-labelledby="exam-library-title">
+        <div class="section-heading exam-library-heading">
+          <span class="eyebrow dark">KHO ĐỀ LUYỆN</span>
+          <h2 id="exam-library-title">Chọn đề phù hợp để bắt đầu</h2>
+          <p>Bạn đã đăng nhập. Hãy chọn một đề phù hợp rồi bắt đầu làm bài; kết quả sẽ được lưu đúng tài khoản của bạn.</p>
+        </div>
+        <div id="exam-catalog-status" class="catalog-status">Đang tải danh sách đề...</div>
+        <div id="exam-catalog" class="exam-catalog-grid"></div>
+      </section>
+
+      <section class="structure-section">
+        <div class="section-heading">
+          <span class="eyebrow dark">CẤU TRÚC BÀI THI</span>
+          <h2>Ba phần, chấm đúng thang điểm</h2>
+          <p>Điểm từng phần được hiển thị riêng để học sinh biết dạng câu nào cần cải thiện.</p>
+        </div>
+
+        <div class="structure-grid">
+          <article class="structure-card">
+            <span class="part-number">01</span>
+            <h3>Trắc nghiệm nhiều lựa chọn</h3>
+            <p>18 câu, mỗi câu chọn một trong bốn phương án.</p>
+            <div class="part-score"><strong>4,5</strong> điểm tối đa</div>
+          </article>
+
+          <article class="structure-card featured">
+            <span class="part-number">02</span>
+            <h3>Trắc nghiệm Đúng/Sai</h3>
+            <p>4 câu, mỗi câu gồm bốn nhận định được chấm lũy tiến.</p>
+            <div class="part-score"><strong>4,0</strong> điểm tối đa</div>
+          </article>
+
+          <article class="structure-card">
+            <span class="part-number">03</span>
+            <h3>Trắc nghiệm trả lời ngắn</h3>
+            <p>6 câu tính toán, nhập kết quả cuối cùng không kèm đơn vị.</p>
+            <div class="part-score"><strong>1,5</strong> điểm tối đa</div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section id="exam-screen" class="screen exam-screen">
+      <div class="exam-header">
+        <div>
+          <span id="active-exam-code" class="eyebrow dark">ĐỀ LUYỆN VẬT LÍ</span>
+          <h1 id="active-exam-title">Kiểm tra năng lực Vật lí THPT</h1>
+          <p id="candidate-line"></p>
+        </div>
+
+        <div class="timer-card" id="timer-card">
+          <span>Thời gian còn lại</span>
+          <strong id="timer">50:00</strong>
+        </div>
+      </div>
+
+      <div class="exam-layout">
+        <aside class="question-map" aria-label="Danh sách câu hỏi">
+          <div class="progress-block">
+            <div class="progress-label">
+              <span>Tiến độ</span>
+              <strong id="progress-text">0/28</strong>
+            </div>
+            <div class="progress-track"><span id="progress-bar"></span></div>
+          </div>
+
+          <div id="question-navigation"></div>
+
+          <div class="map-legend">
+            <span><i class="legend-current"></i>Đang xem</span>
+            <span><i class="legend-done"></i>Đã trả lời</span>
+            <span><i class="legend-empty"></i>Chưa trả lời</span>
+          </div>
+
+          <button id="submit-exam-button" class="submit-button" type="button">Nộp bài</button>
+        </aside>
+
+        <section class="question-panel">
+          <div id="question-content"></div>
+
+          <div class="question-actions">
+            <button id="previous-button" class="secondary-button" type="button">← Câu trước</button>
+            <button id="next-button" class="primary-button compact" type="button">Câu tiếp theo →</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="result-screen" class="screen result-screen">
+      <div class="result-hero">
+        <div>
+          <span class="eyebrow">KẾT QUẢ BÀI LÀM</span>
+          <h1 id="result-name">Hoàn thành bài thi</h1>
+          <p id="result-message"></p>
+        </div>
+        <div class="score-ring">
+          <strong id="final-score">0.00</strong>
+          <span>/ 10</span>
+        </div>
+      </div>
+
+      <div class="result-grid">
+        <article class="result-card">
+          <span>Phần I</span>
+          <strong id="part-one-score">0.00</strong>
+          <small>/ 4,50 điểm</small>
+        </article>
+        <article class="result-card">
+          <span>Phần II</span>
+          <strong id="part-two-score">0.00</strong>
+          <small>/ 4,00 điểm</small>
+        </article>
+        <article class="result-card">
+          <span>Phần III</span>
+          <strong id="part-three-score">0.00</strong>
+          <small>/ 1,50 điểm</small>
+        </article>
+        <article class="result-card">
+          <span>Thời gian làm</span>
+          <strong id="time-used">0:00</strong>
+          <small id="result-duration-limit">theo thời gian của đề</small>
+        </article>
+      </div>
+
+      <section class="review-section">
+        <div class="review-heading">
+          <div>
+            <span class="eyebrow dark">XEM LẠI BÀI LÀM</span>
+            <h2>Đáp án và lời giải</h2>
+          </div>
+          <div class="result-actions">
+            <button id="retry-button" class="secondary-button" type="button">Làm lại đề</button>
+            <button id="view-dashboard-button" class="primary-button compact" type="button">Giáo viên xem bảng điểm</button>
+          </div>
+        </div>
+        <div id="review-list" class="review-list"></div>
+      </section>
+    </section>
+
+    <section id="dashboard-screen" class="screen dashboard-screen">
+      <div class="dashboard-heading">
+        <div>
+          <span class="eyebrow dark">BẢNG ĐIỂM HỌC SINH</span>
+          <h1>Thống kê kết quả luyện đề</h1>
+          <p id="dashboard-status">Dữ liệu được đồng bộ từ Supabase và chỉ tài khoản giáo viên được xem.</p>
+        </div>
+        <div class="dashboard-actions">
+          <button id="refresh-dashboard-button" class="secondary-button" type="button">Làm mới</button>
+          <button id="export-button" class="primary-button compact" type="button">Xuất CSV</button>
+          <button id="logout-teacher-button" class="danger-button" type="button">Đăng xuất</button>
+        </div>
+      </div>
+
+      <div class="teacher-tabs" role="tablist" aria-label="Khu vực giáo viên">
+        <button class="teacher-tab active" type="button" data-teacher-tab="results">Bảng điểm</button>
+        <button class="teacher-tab" type="button" data-teacher-tab="exams">Quản lý đề</button>
+      </div>
+
+      <div id="teacher-results-panel" class="teacher-panel active" data-teacher-panel="results">
+        <div class="stats-grid">
+          <article class="stat-card"><span>Lượt làm bài</span><strong id="stat-attempts">0</strong><small>Tổng số kết quả</small></article>
+          <article class="stat-card"><span>Điểm trung bình</span><strong id="stat-average">0.00</strong><small>Trên thang điểm 10</small></article>
+          <article class="stat-card"><span>Điểm cao nhất</span><strong id="stat-highest">0.00</strong><small>Thành tích tốt nhất</small></article>
+          <article class="stat-card"><span>Tỉ lệ đạt ≥ 5</span><strong id="stat-pass-rate">0%</strong><small>Học sinh đạt yêu cầu</small></article>
+        </div>
+
+        <div class="dashboard-columns">
+          <section class="chart-card">
+            <div class="card-title-row"><div><span class="eyebrow dark">PHÂN BỐ ĐIỂM</span><h2>Phổ điểm</h2></div></div>
+            <div id="distribution-chart" class="distribution-chart"></div>
+          </section>
+          <section class="chart-card">
+            <div class="card-title-row"><div><span class="eyebrow dark">ĐIỂM THEO PHẦN</span><h2>Năng lực trung bình</h2></div></div>
+            <div id="part-chart" class="part-chart"></div>
+          </section>
+        </div>
+
+        <section class="table-card">
+          <div class="table-toolbar">
+            <div><span class="eyebrow dark">LỊCH SỬ LÀM BÀI</span><h2>Danh sách kết quả</h2></div>
+            <div class="filters">
+              <input id="search-result" type="search" placeholder="Tìm tên học sinh..." />
+              <select id="class-filter"><option value="">Tất cả lớp</option></select>
+              <select id="exam-filter"><option value="">Tất cả đề</option></select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr>
+                <th>Học sinh</th><th>Lớp</th><th>Đề</th><th>Phần I</th><th>Phần II</th><th>Phần III</th><th>Tổng điểm</th><th>Thời gian</th><th>Ngày làm</th>
+              </tr></thead>
+              <tbody id="results-table-body"></tbody>
+            </table>
+          </div>
+          <div id="empty-results" class="empty-state"><strong>Chưa có kết quả nào</strong><p>Học sinh nộp bài sẽ xuất hiện tại đây.</p></div>
+        </section>
+      </div>
+
+      <div id="teacher-exams-panel" class="teacher-panel" data-teacher-panel="exams">
+        <div class="exam-manager-layout">
+          <aside class="exam-manager-sidebar">
+            <div class="manager-card-heading">
+              <div><span class="eyebrow dark">DANH SÁCH ĐỀ</span><h2>Đề của giáo viên</h2></div>
+              <button id="new-exam-button" class="primary-button compact" type="button">+ Tạo đề</button>
+            </div>
+            <button id="seed-default-exam-button" class="secondary-button manager-wide-button" type="button">Đưa đề mẫu số 01 lên Supabase</button>
+            <div id="teacher-exam-list" class="teacher-exam-list"></div>
+          </aside>
+
+          <section class="exam-editor-card">
+            <div id="exam-editor-empty" class="empty-state manager-empty">
+              <strong>Chọn một đề hoặc tạo đề mới</strong>
+              <p>Giáo viên có thể tạo đề, thêm câu hỏi và xuất bản để học sinh nhìn thấy trong kho đề.</p>
+            </div>
+
+            <div id="exam-editor" hidden>
+              <div class="manager-card-heading editor-heading">
+                <div><span class="eyebrow dark">BIÊN SOẠN ĐỀ</span><h2 id="exam-editor-heading">Tạo đề mới</h2></div>
+                <div class="editor-actions">
+                  <button id="save-exam-draft-button" class="secondary-button" type="button">Lưu bản nháp</button>
+                  <button id="publish-exam-button" class="primary-button compact" type="button">Xuất bản</button>
+                  <button id="delete-exam-button" class="danger-button" type="button">Xóa đề</button>
+                </div>
+              </div>
+
+              <div class="exam-metadata-grid">
+                <label>Mã đề<input id="exam-code-input" maxlength="40" placeholder="Ví dụ: VL-THPT-02" /></label>
+                <label>Thời gian (phút)<input id="exam-duration-input" type="number" min="10" max="180" value="50" /></label>
+                <label class="metadata-wide">Tên đề<input id="exam-title-input" maxlength="150" placeholder="Tên đề luyện" /></label>
+                <label class="metadata-wide">Mô tả<textarea id="exam-description-input" rows="3" maxlength="500" placeholder="Mô tả ngắn cho học sinh"></textarea></label>
+              </div>
+
+              <div class="question-count-strip">
+                <div><strong id="draft-mcq-count">0/18</strong><span>Nhiều lựa chọn</span></div>
+                <div><strong id="draft-tf-count">0/4</strong><span>Đúng/Sai</span></div>
+                <div><strong id="draft-short-count">0/6</strong><span>Trả lời ngắn</span></div>
+              </div>
+
+              <section class="question-builder-card">
+                <div class="manager-card-heading">
+                  <div><span class="eyebrow dark">THÊM CÂU HỎI</span><h3>Nhập từng câu vào đề</h3></div>
+                  <select id="question-type-input" aria-label="Loại câu hỏi">
+                    <option value="mcq">Phần I · Nhiều lựa chọn</option>
+                    <option value="tf">Phần II · Đúng/Sai</option>
+                    <option value="short">Phần III · Trả lời ngắn</option>
+                  </select>
+                </div>
+                <div id="question-builder-fields"></div>
+                <button id="add-question-button" class="primary-button compact" type="button">Thêm câu vào đề</button>
+              </section>
+
+              <section class="draft-question-section">
+                <div class="manager-card-heading"><div><span class="eyebrow dark">NỘI DUNG ĐỀ</span><h3>Danh sách câu hỏi đã thêm</h3></div></div>
+                <div id="draft-question-list" class="draft-question-list"></div>
+              </section>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="teacher-login-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-teacher-login></div>
+
+    <div
+      class="modal-card teacher-login-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="teacher-login-title"
+      aria-describedby="teacher-login-description"
+    >
+      <div class="teacher-login-brand" aria-hidden="true">
+        <span>H</span>
+      </div>
+
+      <div class="teacher-login-heading">
+        <span class="teacher-login-eyebrow">KHU VỰC QUẢN TRỊ</span>
+        <h2 id="teacher-login-title">Đăng nhập giáo viên</h2>
+        <p id="teacher-login-description">
+          Dùng mật khẩu hoặc nhận liên kết đăng nhập qua email để vào khu vực giáo viên.
+        </p>
+      </div>
+
+      <form id="teacher-login-form">
+        <label class="teacher-field" for="teacher-email">
+          <span>Email</span>
+          <span class="teacher-input-wrap">
+            <svg class="teacher-input-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 6.5h16v11H4z"></path>
+              <path d="m4.5 7 7.5 6 7.5-6"></path>
+            </svg>
+            <input
+              id="teacher-email"
+              type="email"
+              autocomplete="email"
+              inputmode="email"
+              placeholder="giaovien@gmail.com"
+              required
+            />
+          </span>
+        </label>
+
+        <label class="teacher-field" for="teacher-password">
+          <span>Mật khẩu</span>
+          <span class="teacher-input-wrap teacher-password-wrap">
+            <svg class="teacher-input-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="5" y="10" width="14" height="10" rx="2"></rect>
+              <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+            </svg>
+            <input
+              id="teacher-password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Nhập mật khẩu"
+              required
+            />
+            <button
+              id="toggle-teacher-password"
+              class="teacher-password-toggle"
+              type="button"
+              aria-label="Hiện mật khẩu"
+              aria-pressed="false"
+              title="Hiện mật khẩu"
+            >
+              <svg class="eye-icon eye-open" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                <circle cx="12" cy="12" r="2.5"></circle>
+              </svg>
+              <svg class="eye-icon eye-closed" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m3 3 18 18"></path>
+                <path d="M10.6 6.2A10.6 10.6 0 0 1 12 6c6 0 9.5 6 9.5 6a15.4 15.4 0 0 1-2.5 3.2"></path>
+                <path d="M6.2 6.2C3.8 7.8 2.5 12 2.5 12s3.5 6 9.5 6c1.4 0 2.6-.3 3.7-.8"></path>
+                <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"></path>
+              </svg>
+            </button>
+          </span>
+        </label>
+
+        <div class="teacher-login-alternative">
+          <button id="teacher-magic-link-button" class="teacher-magic-link-button" type="button">
+            Đăng nhập bằng liên kết email
+          </button>
+          <small>Dùng khi quên mật khẩu hoặc tài khoản chưa từng đặt mật khẩu.</small>
+        </div>
+
+        <p id="teacher-login-error" class="teacher-login-error" role="alert" aria-live="polite"></p>
+
+        <div class="teacher-login-actions">
+          <button id="close-teacher-login" class="teacher-close-button" type="button">
+            Đóng
+          </button>
+          <button id="teacher-login-submit" class="teacher-submit-button" type="submit">
+            <span>Đăng nhập</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14"></path>
+              <path d="m14 7 5 5-5 5"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="confirm-modal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <span class="modal-icon">!</span>
+      <h2 id="modal-title">Nộp bài?</h2>
+      <p id="modal-message"></p>
+      <div class="modal-actions">
+        <button class="secondary-button" type="button" data-close-modal>Tiếp tục làm</button>
+        <button id="confirm-submit-button" class="submit-button compact" type="button">Nộp bài ngay</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
