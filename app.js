@@ -800,7 +800,6 @@
     $("#candidate-line").textContent = `${name} · Lớp ${className}`;
     $("#result-duration-limit").textContent = `trên ${exam.durationMinutes} phút`;
     renderQuestionNavigation();
-    renderQuestion();
     updateTimerDisplay();
     updateProgress();
     showScreen("exam");
