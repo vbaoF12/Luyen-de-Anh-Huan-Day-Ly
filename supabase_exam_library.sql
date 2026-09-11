@@ -14,7 +14,8 @@ security definer
 set search_path = ''
 as $$
   select lower(coalesce(auth.jwt() ->> 'email', '')) in (
-    'beobeo2035@gmail.com'
+    'beobeo2035@gmail.com',
+    'baelixx68@gmail.com'
     -- Thêm email khác theo mẫu:
     -- , 'giaovien2@gmail.com'
   );
